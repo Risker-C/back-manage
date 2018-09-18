@@ -11,7 +11,14 @@ var components = {
   categoryList: () => import('../views/category/index'),
   addCategory: () => import('../views/category/addCategory'),
   bookList: () => import('../views/book/index'),
-  addBook: () => import('../views/book/addBook')
+  addBook: () => import('../views/book/addBook'),
+  uploadImg: () => import('../components/uploadImg'),
+  editBook: () => import('../views/book/editBook'),
+  editMessage: () => import('../views/managers/editMessage'),
+  editPassword: () => import('../views/managers/editPassword'),
+  managerList: () => import('../views/managers/managerList'),
+  imgManage: () => import('../views/sowingMap/imgManage'),
+  addMessage: () => import('../views/managers/addMessage')
 }
 
 export default new Router({
@@ -59,6 +66,46 @@ export default new Router({
           path: 'addBook',
           name: 'addBook',
           component: components.addBook
+        },
+        {
+          path: 'uploadImg',
+          name: 'uploadImg',
+          component: components.uploadImg
+        },
+        {
+          path: 'editBook:id',
+          name: 'editBook',
+          component: components.editBook
+        },
+        {
+          path: 'editBook',
+          name: 'editBook',
+          component: components.editBook
+        },
+        {
+          path: 'editMessage',
+          name: 'editMessage',
+          component: components.editMessage
+        },
+        {
+          path: 'editPassword',
+          name: 'editPassword',
+          component: components.editPassword
+        },
+        {
+          path: 'managerList',
+          name: 'managerList',
+          component: components.managerList
+        },
+        {
+          path: 'imgManage',
+          name: 'imgManage',
+          component: components.imgManage
+        },
+        {
+          path: 'addMessage',
+          name: 'addMessage',
+          component: components.addMessage
         }
       ]
     }

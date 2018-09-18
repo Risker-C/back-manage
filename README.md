@@ -19,3 +19,5 @@ npm run build --report
 ```
 
 For a detailed explanation on how things work, check out the [guide](http://vuejs-templates.github.io/webpack/) and [docs for vue-loader](http://vuejs.github.io/vue-loader).
+
+2018/9/17 第一次提交，书写了部分页面布局，实现了登陆与退出功能，以 及获取列表信息的功能

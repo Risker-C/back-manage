@@ -47,11 +47,7 @@
             <el-menu-item index="/layout/addCategory">添加分类</el-menu-item>
           </el-menu-item-group>
         </el-submenu>
-        <el-menu-item index="3">
-          <i class="el-icon-document"></i>
-          <span slot="title">导航三</span>
-        </el-menu-item>
-        <el-submenu index="4">
+        <el-submenu index="3">
           <template slot="title">
             <i class="el-icon-setting"></i>
             <span slot="title">图书管理</span>
@@ -59,6 +55,36 @@
           <el-menu-item-group>
             <el-menu-item index="/layout/bookList">图书列表</el-menu-item>
             <el-menu-item index="/layout/addBook">添加图书</el-menu-item>
+          </el-menu-item-group>
+        </el-submenu>
+        <el-submenu index="4">
+          <template slot="title">
+            <i class="el-icon-service"></i>
+            <span slot="title">管理员用户</span>
+          </template>
+          <el-menu-item-group>
+            <el-menu-item index="/layout/managerList">管理员列表</el-menu-item>
+            <el-menu-item index="/layout/editPassword">修改密码</el-menu-item>
+            <el-menu-item index="/layout/editMessage">修改个人信息</el-menu-item>
+            <el-menu-item index="/layout/addMessage">添加管理员</el-menu-item>
+          </el-menu-item-group>
+        </el-submenu>
+        <el-submenu index="5">
+          <template slot="title">
+            <i class="el-icon-picture-outline"></i>
+            <span slot="title">轮播图管理</span>
+          </template>
+          <el-menu-item-group>
+            <el-menu-item index="/layout/imgManage">轮播图列表</el-menu-item>
+          </el-menu-item-group>
+        </el-submenu>
+        <el-submenu index="6">
+          <template slot="title">
+            <i class="el-icon-document"></i>
+            <span slot="title">测试</span>
+          </template>
+          <el-menu-item-group>
+            <el-menu-item index="/layout/uploadImg">上传图片功能测试</el-menu-item>
           </el-menu-item-group>
         </el-submenu>
       </el-menu>
@@ -76,13 +102,13 @@ export default {
 
     },
     handleLogout () {
-      this.$axios.get('/logout').then(res =>{
+      this.$axios.get('/logout').then(res => {
         this.$router.replace('/')
         this.logout()
         this.$message({
           message: '退出登录成功',
           type: 'success'
-        });
+        })
       })
     },
     ...mapMutations(['logout'])

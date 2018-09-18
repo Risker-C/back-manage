@@ -10,6 +10,7 @@ const store = new Vuex.Store({
   mutations: {
     login (state, date) {
       state.data = date
+      console.log(state.data)
     },
     logout (state) {
       state.data = {}
