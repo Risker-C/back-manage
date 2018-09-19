@@ -5,7 +5,7 @@
         <span>云书后台操作系统</span>
         <el-dropdown class="user-handle">
           <div class="avatar-wrap">
-            <img src="http://pbl.yaojunrong.com/FiC8ZOpJDzsI5-9HHZPmnAm1WGAo" v-if="true">
+            <img :src="this.$store.state.data.avatar" v-if="true">
           </div>
           <el-dropdown-menu slot="dropdown">
             <el-dropdown-item @click.native="handlePerson">
@@ -17,7 +17,6 @@
           </el-dropdown-menu>
         </el-dropdown>
       </h2>
-
     </div>
     <div class="sidebar">
       <el-menu
@@ -76,6 +75,7 @@
           </template>
           <el-menu-item-group>
             <el-menu-item index="/layout/imgManage">轮播图列表</el-menu-item>
+            <el-menu-item index="/layout/addImg">添加轮播图</el-menu-item>
           </el-menu-item-group>
         </el-submenu>
         <el-submenu index="6">
@@ -85,6 +85,7 @@
           </template>
           <el-menu-item-group>
             <el-menu-item index="/layout/uploadImg">上传图片功能测试</el-menu-item>
+            <el-menu-item index="/layout/persistedstate">数据持久化功能测试</el-menu-item>
           </el-menu-item-group>
         </el-submenu>
       </el-menu>
@@ -99,7 +100,7 @@ import {mapState, mapMutations} from 'vuex'
 export default {
   methods: {
     handlePerson () {
-
+      this.$router.push('/layout/editMessage')
     },
     handleLogout () {
       this.$axios.get('/logout').then(res => {

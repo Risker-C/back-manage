@@ -18,7 +18,9 @@ var components = {
   editPassword: () => import('../views/managers/editPassword'),
   managerList: () => import('../views/managers/managerList'),
   imgManage: () => import('../views/sowingMap/imgManage'),
-  addMessage: () => import('../views/managers/addMessage')
+  addMessage: () => import('../views/managers/addMessage'),
+  persistedstate: () => import('../components/persistedstate'),
+  addImg: () => import('../views/sowingMap/addImg')
 }
 
 export default new Router({
@@ -78,11 +80,6 @@ export default new Router({
           component: components.editBook
         },
         {
-          path: 'editBook',
-          name: 'editBook',
-          component: components.editBook
-        },
-        {
           path: 'editMessage',
           name: 'editMessage',
           component: components.editMessage
@@ -106,6 +103,16 @@ export default new Router({
           path: 'addMessage',
           name: 'addMessage',
           component: components.addMessage
+        },
+        {
+          path: 'persistedstate',
+          name: 'persistedstate',
+          component: components.persistedstate
+        },
+        {
+          path: 'addImg',
+          name: 'addImg',
+          component: components.addImg
         }
       ]
     }

@@ -4,92 +4,73 @@
       <el-breadcrumb-item :to="{ path: '/layout' }">首页</el-breadcrumb-item>
       <el-breadcrumb-item>添加图书页</el-breadcrumb-item>
     </el-breadcrumb>
-    <el-form :model="form" :rules="rules" ref="form" label-width="100px" class="demo-ruleForm">
+    <el-form :model="formData" :rules="rules" ref="form" label-width="100px" class="demo-ruleForm">
+      <el-form-item label="图书名称" prop="name">
+        <el-input v-model="formData.title"></el-input>
+      </el-form-item>
       <el-form-item label="图书分类" prop="region">
-        <el-select v-model="form.bookType" placeholder="请选择" class="Main">
-          <el-option  v-for="item in options"  :key="item.value"
-            :label="item.label"  :value="item.value">
+        <el-select v-model="formData.typeId" placeholder="请选择" class="Main">
+          <el-option
+            v-for="item in options"
+            :key="item._id"
+            :label="item.title"
+            :value="item._id">
           </el-option>
         </el-select>
       </el-form-item>
-      <el-form-item label="爬虫链接" prop="name">
-        <el-input v-model="form.name"></el-input>
+      <el-form-item label="爬虫链接" prop="url">
+        <el-input v-model="formData.url"></el-input>
       </el-form-item>
       <el-form-item label="书籍图片" prop="image">
-        <el-switch  v-model="form.uploadType"  class="Header"
-          active-text="填写链接"  inactive-text="手动上传">
-          </el-switch>
-          <div class="uploadByLink" v-if="form.uploadType">
-              <el-input v-model="form.ImgLink"  placeholder="请输入内容" clearable></el-input>
-            </div>
-          <div class="uploadByImg" v-else>
-            <el-upload
-              class="avatar-uploader"
-              action="https://upload-z1.qiniup.com"
-              :show-file-list="false"
-              :on-success="handleAvatarSuccess"
-              :before-upload="beforeAvatarUpload">
-              <img v-if="form.imageUrl" :src="form.imageUrl" class="avatar">
-              <i v-else class="el-icon-plus avatar-uploader-icon"></i>
-            </el-upload>
-          </div>
+        <el-switch
+          v-model="show"
+          active-text="本地上传"
+          inactive-text="上传链接"></el-switch>
+        <uploadImg v-model="formData.img" v-show="show"></uploadImg>
+        <el-input v-model="formData.img" v-show="!show"></el-input>
       </el-form-item>
-      <el-form-item label="图书作者" prop="name">
-        <el-input v-model="form.name"></el-input>
+      <el-form-item label="图书作者" prop="author">
+        <el-input v-model="formData.author"></el-input>
       </el-form-item>
       <el-form-item>
-        <el-button type="primary" @click="submitForm('form')">立即创建</el-button>
-        <el-button @click="resetForm('form')">重置</el-button>
+        <el-button type="primary" @click="submitForm('formData')">立即创建</el-button>
       </el-form-item>
     </el-form>
   </div>
 </template>
 
 <script>
+import uploadImg from '@/components/uploadImg'
+
 export default {
+  components: {
+    uploadImg
+  },
   data () {
     return {
-      options: [{
-        value: '选项1',
-        label: '黄金糕'
-      }, {
-        value: '选项2',
-        label: '双皮奶'
-      }, {
-        value: '选项3',
-        label: '蚵仔煎'
-      }, {
-        value: '选项4',
-        label: '龙须面'
-      }, {
-        value: '选项5',
-        label: '北京烤鸭'
-      }],
-      form: {
-        uploadType: true,
-        bookType: '',
-        bookName: '',
-        ImgLink: '',
-        imageUrl: '',
-        bookLink: '',
-        bookAuthor: ''
+      options: [],
+      formData: {
+        typeId: '',
+        title: '',
+        img: '',
+        url: '',
+        author: ''
       },
+      show: true,
       rules: {
         name: [
-          { required: true, message: '请输入活动名称', trigger: 'blur' },
-          { min: 3, max: 5, message: '长度在 3 到 5 个字符', trigger: 'blur' }
+          { required: true, message: '请输入图书名称', trigger: 'blur' },
+          { min: 1, max: 20, message: '长度在 1 到 20 个字符', trigger: 'blur' }
         ],
         region: [
-          { required: true, message: '请选择活动区域', trigger: 'change' }
+          { required: true, message: '请选择图书分类', trigger: 'change' }
+        ],
+        url: [
+          { required: true, message: '请上传图书地址', trigger: 'blur'},
+          { type: 'url', message: '请确认地址是否正确', trigger: 'blur'}
         ],
         image: [
           { required: true, message: '请上传图片', trigger: 'change' }
-        ],
-        resource: [
-          { required: true, message: '请选择活动资源', trigger: 'change' }
-        ],
-        desc: [
-          { required: true, message: '请填写活动形式', trigger: 'blur' }
         ]
       }
     }
@@ -123,9 +104,27 @@ export default {
         }
       })
     },
-    resetForm (formName) {
-      this.$refs[formName].resetFields()
+    getOption () {
+      this.$axios.get('/category').then(res => {
+        console.log(res.data.data)
+      }).catch(err => {
+        console.log(err)
+      })
     }
+  },
+  created() {
+    this.$axios.get('/category').then(res => {
+        console.log(res.data.count)
+        var count = res.data.count
+        this.$axios.get('/category',{
+          pn: 1,
+          size: count + 1
+        }).then(res => {
+          this.options = res.data.data
+        })
+      }).catch(err => {
+        console.log(err)
+      })
   }
 }
 </script>

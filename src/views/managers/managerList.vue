@@ -49,7 +49,7 @@
         label="操作"
         align="center">
         <template slot-scope="scope">
-          <el-button @click="handleClick(scope.row)" type="primary" size="small">查看</el-button>
+          <!-- <el-button @click="handleClick(scope.row)" type="primary" size="small">查看</el-button> -->
           <el-button @click="handleDelect(scope.row)" type="danger" size="small">删除</el-button>
         </template>
       </el-table-column>
@@ -65,6 +65,15 @@
         <el-button @click="centerDialogVisible = false">确 定</el-button>
       </span>
     </el-dialog>
+    <el-pagination
+      @size-change="handleSizeChange"
+      @current-change="handleCurrentChange"
+      :page-sizes="[5, 10, 20]"
+      :page-size="size"
+      :pager-count="5"
+      layout="total, sizes, prev, pager, next, jumper"
+      style="text-align: right;"
+      :total="count"></el-pagination>
   </div>
 </template>
 
@@ -73,7 +82,10 @@ export default {
   data () {
     return {
       tableData: [],
-      centerDialogVisible: false
+      centerDialogVisible: false,
+      pn: 1,
+      size: 10,
+      count: 100
     }
   },
   methods: {
@@ -84,12 +96,26 @@ export default {
       this.centerDialogVisible = true
     },
     getData () {
-      this.$axios.get('/user').then(res => {
+      this.$axios.get('/user', {
+        pn: this.pn,
+        size: this.size
+      }).then(res => {
         console.log(res)
+        this.count = res.data.count
         this.tableData = res.data.data
       }).catch(err => {
         console.log(err)
       })
+    },
+    handleSizeChange (val) {
+      console.log(`每页${val}条`)
+      this.size = val
+      this.getData()
+    },
+    handleCurrentChange (val) {
+      console.log(`当前页:${val}`)
+      this.pn = val
+      this.getData()
     }
   },
   created () {

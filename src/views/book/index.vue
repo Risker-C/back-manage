@@ -50,6 +50,15 @@
         <el-button @click="centerDialogVisible = false">确 定</el-button>
       </span>
     </el-dialog>
+    <el-pagination
+      @size-change="handleSizeChange"
+      @current-change="handleCurrentChange"
+      :page-sizes="[5,10,20,30]"
+      :page-size="size"
+      style="text-align:right"
+      layout="total, sizes, prev, pager, next, jumper"
+      :total="count">
+    </el-pagination>
   </div>
 </template>
 
@@ -58,7 +67,11 @@ export default {
   data () {
     return {
       tableData: [],
-      centerDialogVisible: false
+      centerDialogVisible: false,
+      currentpage: 10,
+      pn: 1,
+      size: 5,
+      count: 300
     }
   },
   methods: {
@@ -69,20 +82,27 @@ export default {
       this.centerDialogVisible = true
     },
     getData () {
-      this.$axios.get('/book').then(res => {
+      this.$axios.get('/book', {
+        pn: this.pn,
+        size: this.size
+      }).then(res => {
         console.log(res)
+        this.tableData = res.data.data
       }).catch(err => {
         console.log(err)
       })
+    },
+    handleSizeChange (val) {
+      this.size = val
+      this.getData()
+    },
+    handleCurrentChange (val) {
+      this.pn = val
+      this.getData()
     }
   },
   created () {
-    this.$axios.get('/book').then(res => {
-      console.log(res)
-      this.tableData = res.data.data
-    }).catch(err => {
-      console.log(err)
-    })
+    this.getData()
   }
 }
 </script>
