@@ -17,7 +17,7 @@
         label="书籍头图"
         align="center">
         <template slot-scope="data">
-          <img :src="data.row.img" alt="" width="100px">
+          <img :src="data.row.img" style="border-radius: 10%" alt="" width="100px">
         </template>
       </el-table-column>
       <el-table-column

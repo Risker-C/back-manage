@@ -5,10 +5,10 @@
       <el-breadcrumb-item>添加图书页</el-breadcrumb-item>
     </el-breadcrumb>
     <el-form :model="formData" :rules="rules" ref="form" label-width="100px" class="demo-ruleForm">
-      <el-form-item label="图书名称" prop="name">
+      <el-form-item label="图书名称" prop="title">
         <el-input v-model="formData.title"></el-input>
       </el-form-item>
-      <el-form-item label="图书分类" prop="region">
+      <el-form-item label="图书分类" prop="typeId">
         <el-select v-model="formData.typeId" placeholder="请选择" class="Main">
           <el-option
             v-for="item in options"
@@ -21,7 +21,7 @@
       <el-form-item label="爬虫链接" prop="url">
         <el-input v-model="formData.url"></el-input>
       </el-form-item>
-      <el-form-item label="书籍图片" prop="image">
+      <el-form-item label="书籍图片" prop="img">
         <el-switch
           v-model="show"
           active-text="本地上传"
@@ -58,48 +58,57 @@ export default {
       },
       show: true,
       rules: {
-        name: [
+        title: [
           { required: true, message: '请输入图书名称', trigger: 'blur' },
           { min: 1, max: 20, message: '长度在 1 到 20 个字符', trigger: 'blur' }
         ],
-        region: [
+        typeId: [
           { required: true, message: '请选择图书分类', trigger: 'change' }
         ],
         url: [
-          { required: true, message: '请上传图书地址', trigger: 'blur'},
-          { type: 'url', message: '请确认地址是否正确', trigger: 'blur'}
+          { required: true, message: '请上传图书地址', trigger: 'blur' },
+          { type: 'url', message: '请确认地址是否正确', trigger: 'blur' }
         ],
-        image: [
+        img: [
           { required: true, message: '请上传图片', trigger: 'change' }
+        ],
+        author: [
+          { required: true, message: '请输入作者', trigger: 'blur' },
+          { min: 1, max: 20, message: '长度请在 1 到 20 个字符之间', trigger: 'blur' }
         ]
       }
     }
   },
   methods: {
-    handleAvatarSuccess (res, file) {
-      this.form.imageUrl = URL.createObjectURL(file.raw)
-    },
-    beforeAvatarUpload (file) {
-      const isJPG = file.type === 'image/jpeg'
-      const isLt2M = file.size / 1024 / 1024 < 2
-
-      if (!isJPG) {
-        this.$message.error('上传头像图片只能是 JPG 格式!')
-      }
-      if (!isLt2M) {
-        this.$message.error('上传头像图片大小不能超过 2MB!')
-      }
-      return isJPG && isLt2M
-    },
-    handleUpload () {
-      console.log()
-    },
-    submitForm (formName) {
-      this.$refs[formName].validate((valid) => {
+    submitForm () {
+      this.$refs['form'].validate((valid) => {
         if (valid) {
-          alert('submit!')
+          console.log(this.formData)
+          this.$axios.post('/book', this.formData).then(res => {
+            console.log(res)
+            if (res.code === 200) {
+              this.$message({
+                message: res.msg,
+                type: 'success'
+              })
+              setTimeout(() => {
+                this.$router.push('/layout/bookList')
+              }, 1000)
+            } else {
+              this.$message({
+                message: res.msg,
+                type: 'warning'
+              })
+            }
+          }).catch(err => {
+            console.log(err)
+            this.$message.error(err.msg)
+          })
         } else {
-          console.log('error submit!!')
+          this.$message({
+            message: '信息未填写完整,请填写完整后再提交',
+            type: 'warning'
+          })
           return false
         }
       })
@@ -112,19 +121,18 @@ export default {
       })
     }
   },
-  created() {
+  created () {
     this.$axios.get('/category').then(res => {
-        console.log(res.data.count)
-        var count = res.data.count
-        this.$axios.get('/category',{
-          pn: 1,
-          size: count + 1
-        }).then(res => {
-          this.options = res.data.data
-        })
-      }).catch(err => {
-        console.log(err)
+      var count = res.data.count
+      this.$axios.get('/category', {
+        pn: 1,
+        size: count + 1
+      }).then(res => {
+        this.options = res.data.data
       })
+    }).catch(err => {
+      console.log(err)
+    })
   }
 }
 </script>

@@ -42,7 +42,7 @@
         label="用户头像"
         align="center">
         <template slot-scope="tableData">
-          <img :src="tableData.row.avatar" alt="加载失败" width="100px" height="100px">
+          <img :src="tableData.row.avatar" alt="加载失败" width="100px" height="100px" style="border-radius: 10%">
         </template>
       </el-table-column>
       <el-table-column

@@ -5,7 +5,8 @@ Vue.use(Vuex)
 
 const store = new Vuex.Store({
   state: {
-    data: {}
+    data: {},
+    ID: ''
   },
   mutations: {
     login (state, date) {
@@ -14,6 +15,12 @@ const store = new Vuex.Store({
     },
     logout (state) {
       state.data = {}
+    },
+    setID (state, id) {
+      state.ID = id
+    },
+    removeID (state) {
+      state.ID = ''
     }
   },
   plugins: [createPersistedState({

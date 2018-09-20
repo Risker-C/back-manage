@@ -17,7 +17,7 @@
         label="分类图标"
         align="center">
         <template slot-scope="data">
-          <img :src= "data.row.icon" alt="" style="width: 60px;height: 60px">
+          <img :src= "data.row.icon" alt="" style="width: 60px;height: 60px;border-radius: 20%">
         </template>
       </el-table-column>
       <el-table-column
@@ -26,10 +26,22 @@
         align="center">
       </el-table-column>
       <el-table-column
+        prop="status"
+        label="书籍数量"
+        align="center">
+      </el-table-column>
+      <el-table-column
+        prop="_id"
+        label="分类ID"
+        width="250px"
+        align="center">
+      </el-table-column>
+      <el-table-column
         label="操作"
+        width="250px"
         align="center">
         <template slot-scope="scope">
-          <el-button @click="handleClick(scope.row)" type="primary" size="small">查看</el-button>
+          <el-button @click="handleEdit(scope.row)" type="primary" size="small">编辑</el-button>
           <el-button @click="handleClick(scope.row)" type="success" size="small">详情</el-button>
           <el-button @click="handleDelect(scope.row)" type="danger" size="small">删除</el-button>
         </template>
@@ -62,6 +74,9 @@ export default {
     handleClick (data) {
       console.log(data)
     },
+    handleEdit (data) {
+      this.$router.push({name: 'editCategory', query: {id: data._id}})
+    },
     handleDelect (data) {
       console.log(data)
     },
@@ -70,30 +85,23 @@ export default {
         pn: this.pn,
         size: this.size
       }).then(res => {
-        console.log(res)
+        this.count = res.data.count
         this.tableData = res.data.data
       }).catch(err => {
         console.log(err)
       })
     },
     handleSizeChange (val) {
-      console.log(`每页${val}条`)
       this.size = val
       this.getData()
     },
     handleCurrentChange (val) {
-      console.log(`当前页:${val}`)
       this.pn = val
       this.getData()
     }
   },
   created () {
-    this.$axios.get('/category').then(res => {
-      this.count = res.data.data.length
-      this.getData()
-    }).catch(err => {
-      console.log(err)
-    })
+    this.getData()
   }
 }
 </script>

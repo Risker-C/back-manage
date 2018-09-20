@@ -11,6 +11,9 @@
     <button @click="setLocalStorage">添加localStorage</button>
     <button @click="getLocalStorage">获取localStorage</button>
     <input type="text" :value="localStorage">
+    <h3>插件store数据持久化</h3>
+    <input type="text" v-model="id">
+    <button @click="change">改变值</button>
   </div>
 </template>
 
@@ -19,7 +22,8 @@ export default {
   data () {
     return {
       sessionStorage: '',
-      localStorage: ''
+      localStorage: '',
+      id: ''
     }
   },
   methods: {
@@ -34,6 +38,20 @@ export default {
     },
     getLocalStorage () {
       this.localStorage = localStorage.getItem('name')
+    },
+    change () {
+      this.$store.commit('setID', this.id)
+      this.$message.success('更改成功,页面关闭前有效')
+    }
+  },
+  created () {
+    let id = this.$store.state.ID
+    if (id) {
+      this.id = id
+    } else {
+      if (id === '') {
+        this.$message.error('无信息')
+      }
     }
   }
 }

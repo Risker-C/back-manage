@@ -86,6 +86,7 @@
           <el-menu-item-group>
             <el-menu-item index="/layout/uploadImg">上传图片功能测试</el-menu-item>
             <el-menu-item index="/layout/persistedstate">数据持久化功能测试</el-menu-item>
+            <el-menu-item index="/layout/routeChange">路由跳转功能测试</el-menu-item>
           </el-menu-item-group>
         </el-submenu>
       </el-menu>

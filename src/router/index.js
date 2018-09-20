@@ -20,7 +20,11 @@ var components = {
   imgManage: () => import('../views/sowingMap/imgManage'),
   addMessage: () => import('../views/managers/addMessage'),
   persistedstate: () => import('../components/persistedstate'),
-  addImg: () => import('../views/sowingMap/addImg')
+  addImg: () => import('../views/sowingMap/addImg'),
+  editCategory: () => import('../views/category/editCategory'),
+  routeChange: () => import('../components/routeChange/index'),
+  useParams: () => import('../components/routeChange/useParams'),
+  useQuery: () => import('../components/routeChange/useQuery')
 }
 
 export default new Router({
@@ -113,6 +117,36 @@ export default new Router({
           path: 'addImg',
           name: 'addImg',
           component: components.addImg
+        },
+        {
+          path: 'editCategory',
+          name: 'editCategory',
+          component: components.editCategory
+        },
+        {
+          path: 'routeChange',
+          name: 'routeChange',
+          redirect: 'routeChange/nothing',
+          component: components.routeChange,
+          children: [
+            {
+              path: 'nothing',
+              name: 'nothing',
+              component: {
+                template: '<h3>点击链接或者按钮，开始测试</h3>'
+              }
+            },
+            {
+              path: 'useParams/:id',
+              name: 'useParams',
+              component: components.useParams
+            },
+            {
+              path: 'useQuery',
+              name: 'useQuery',
+              component: components.useQuery
+            }
+          ]
         }
       ]
     }
