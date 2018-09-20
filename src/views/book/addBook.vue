@@ -83,9 +83,7 @@ export default {
     submitForm () {
       this.$refs['form'].validate((valid) => {
         if (valid) {
-          console.log(this.formData)
           this.$axios.post('/book', this.formData).then(res => {
-            console.log(res)
             if (res.code === 200) {
               this.$message({
                 message: res.msg,
@@ -101,7 +99,6 @@ export default {
               })
             }
           }).catch(err => {
-            console.log(err)
             this.$message.error(err.msg)
           })
         } else {
@@ -115,24 +112,20 @@ export default {
     },
     getOption () {
       this.$axios.get('/category').then(res => {
-        console.log(res.data.data)
+        var count = res.data.count
+        this.$axios.get('/category', {
+          pn: 1,
+          size: count + 1
+        }).then(res => {
+          this.options = res.data.data
+        })
       }).catch(err => {
-        console.log(err)
+        this.$message.error(err.msg)
       })
     }
   },
   created () {
-    this.$axios.get('/category').then(res => {
-      var count = res.data.count
-      this.$axios.get('/category', {
-        pn: 1,
-        size: count + 1
-      }).then(res => {
-        this.options = res.data.data
-      })
-    }).catch(err => {
-      console.log(err)
-    })
+    this.getOption()
   }
 }
 </script>

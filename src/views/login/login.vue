@@ -62,7 +62,6 @@ export default {
               })
             }
           }).catch(err => {
-            console.log(err)
             this.$message({
               showClose: true,
               message: err.msg,

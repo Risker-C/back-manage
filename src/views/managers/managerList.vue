@@ -66,14 +66,12 @@
       </span>
     </el-dialog>
     <el-pagination
+      style="text-align:right"
       @size-change="handleSizeChange"
       @current-change="handleCurrentChange"
-      :page-sizes="[5, 10, 20]"
-      :page-size="size"
-      :pager-count="5"
-      layout="total, sizes, prev, pager, next, jumper"
-      style="text-align: right;"
-      :total="count"></el-pagination>
+      :page-size="100"
+      layout="total, prev, pager, next"
+      :total="1000"></el-pagination>
   </div>
 </template>
 
@@ -100,20 +98,17 @@ export default {
         pn: this.pn,
         size: this.size
       }).then(res => {
-        console.log(res)
         this.count = res.data.count
         this.tableData = res.data.data
       }).catch(err => {
-        console.log(err)
+        this.$message.error(err.msg)
       })
     },
     handleSizeChange (val) {
-      console.log(`每页${val}条`)
       this.size = val
       this.getData()
     },
     handleCurrentChange (val) {
-      console.log(`当前页:${val}`)
       this.pn = val
       this.getData()
     }

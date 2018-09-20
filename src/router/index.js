@@ -4,24 +4,26 @@ import Router from 'vue-router'
 Vue.use(Router)
 
 var components = {
+  user: () => import('../views/user/index'),
   login: () => import('../views/login/login'),
   layout: () => import('../views/Layout/index'),
   welcome: () => import('../views/Layout/first'),
-  user: () => import('../views/user/index'),
-  categoryList: () => import('../views/category/index'),
-  addCategory: () => import('../views/category/addCategory'),
   bookList: () => import('../views/book/index'),
   addBook: () => import('../views/book/addBook'),
-  uploadImg: () => import('../components/uploadImg'),
   editBook: () => import('../views/book/editBook'),
+  categoryList: () => import('../views/category/index'),
+  addCategory: () => import('../views/category/addCategory'),
+  editCategory: () => import('../views/category/editCategory'),
+  categoryBooks: () => import('../views/category/categoryBooks.vue'),
+  addMessage: () => import('../views/managers/addMessage'),
+  managerList: () => import('../views/managers/managerList'),
   editMessage: () => import('../views/managers/editMessage'),
   editPassword: () => import('../views/managers/editPassword'),
-  managerList: () => import('../views/managers/managerList'),
-  imgManage: () => import('../views/sowingMap/imgManage'),
-  addMessage: () => import('../views/managers/addMessage'),
-  persistedstate: () => import('../components/persistedstate'),
   addImg: () => import('../views/sowingMap/addImg'),
-  editCategory: () => import('../views/category/editCategory'),
+  editImg: () => import('../views/sowingMap/addImg'),
+  imgManage: () => import('../views/sowingMap/imgManage'),
+  uploadImg: () => import('../components/uploadImg'),
+  persistedstate: () => import('../components/persistedstate'),
   routeChange: () => import('../components/routeChange/index'),
   useParams: () => import('../components/routeChange/useParams'),
   useQuery: () => import('../components/routeChange/useQuery')
@@ -54,16 +56,6 @@ export default new Router({
           component: components.user
         },
         {
-          path: 'categoryList',
-          name: 'categoryList',
-          component: components.categoryList
-        },
-        {
-          path: 'addCategory',
-          name: 'addCategory',
-          component: components.addCategory
-        },
-        {
           path: 'bookList',
           name: 'bookList',
           component: components.bookList
@@ -74,14 +66,34 @@ export default new Router({
           component: components.addBook
         },
         {
+          path: 'editBook',
+          name: 'editBook',
+          component: components.editBook
+        },
+        {
+          path: 'categoryList',
+          name: 'categoryList',
+          component: components.categoryList
+        },
+        {
+          path: 'addCategory',
+          name: 'addCategory',
+          component: components.addCategory
+        },
+        {
+          path: 'editCategory',
+          name: 'editCategory',
+          component: components.editCategory
+        },
+        {
+          path: 'categoryBooks',
+          name: 'categoryBooks',
+          component: components.categoryBooks
+        },
+        {
           path: 'uploadImg',
           name: 'uploadImg',
           component: components.uploadImg
-        },
-        {
-          path: 'editBook:id',
-          name: 'editBook',
-          component: components.editBook
         },
         {
           path: 'editMessage',
@@ -99,19 +111,14 @@ export default new Router({
           component: components.managerList
         },
         {
-          path: 'imgManage',
-          name: 'imgManage',
-          component: components.imgManage
-        },
-        {
           path: 'addMessage',
           name: 'addMessage',
           component: components.addMessage
         },
         {
-          path: 'persistedstate',
-          name: 'persistedstate',
-          component: components.persistedstate
+          path: 'imgManage',
+          name: 'imgManage',
+          component: components.imgManage
         },
         {
           path: 'addImg',
@@ -119,9 +126,14 @@ export default new Router({
           component: components.addImg
         },
         {
-          path: 'editCategory',
-          name: 'editCategory',
-          component: components.editCategory
+          path: 'editImg',
+          name: 'editImg',
+          component: components.editImg
+        },
+        {
+          path: 'persistedstate',
+          name: 'persistedstate',
+          component: components.persistedstate
         },
         {
           path: 'routeChange',

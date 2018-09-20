@@ -56,8 +56,10 @@ const getDate = {
   },
   put (url, data, config) {
     return this.send(url, data, config, 'put')
+  },
+  delete (url, data, config) {
+    return this.send(url, data, config, 'delete')
   }
-
 }
 
 export const $axios = getDate

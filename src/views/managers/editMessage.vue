@@ -42,14 +42,12 @@ export default {
   },
   methods: {
     handleSave () {
-      console.log(this.formData)
       this.$axios.put('/user/userInfo', {
         avatar: this.formData.avatar,
         desc: this.formData.desc,
         email: this.formData.email,
         nickname: this.formData.nickname
       }).then(res => {
-        console.log(res)
         if (res.code === 200) {
           this.$message({
             message: res.msg,
@@ -65,7 +63,6 @@ export default {
           })
         }
       }).catch(err => {
-        console.log(err)
         this.$message.error(err.msg)
       })
     }

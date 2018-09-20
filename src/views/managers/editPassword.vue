@@ -72,7 +72,6 @@ export default {
         password: this.formData.oldPassword,
         new_password: this.formData.newPassword
       }).then(res => {
-        console.log(res)
         if (res.code === 200) {
           this.$message({
             message: res.msg,
@@ -83,7 +82,6 @@ export default {
           setTimeout(() => {
             this.$router.push('/layout/managerList')
           }, 1000)
-          console.log(userData)
         } else {
           this.$message({
             message: res.msg,

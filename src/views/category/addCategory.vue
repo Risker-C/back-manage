@@ -12,7 +12,7 @@
       style="width: 500px;margin: 50px auto"
       class="demo-formData">
       <el-form-item label="分类名称" prop="title" >
-        <el-input v-model="formData.title" placeholder="请输入3-5个字符的分类名"></el-input>
+        <el-input v-model="formData.title" placeholder="请输入1-10个字符的分类名"></el-input>
       </el-form-item>
       <el-form-item label="分类图片" prop="icon" >
         <el-switch
@@ -48,7 +48,7 @@ export default {
       rules: {
         title: [
           { required: true, message: '请输入分类名', trigger: 'blur' },
-          { min: 3, max: 5, message: '长度在 3 到 5 个字符', trigger: 'blur' }
+          { min: 1, max: 10, message: '长度在 1 到 10 个字符', trigger: 'blur' }
         ],
         icon: [
           { required: true, message: '请上传分类图标', trigger: 'change' },
@@ -61,9 +61,7 @@ export default {
     submitForm () {
       this.$refs['form'].validate((valid) => {
         if (valid) {
-          console.log(this.formData)
           this.$axios.post('/category', this.formData).then(res => {
-            console.log(res)
             if (res.code === 200) {
               this.$message({
                 message: res.msg,

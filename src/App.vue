@@ -23,4 +23,11 @@ export default {
     width: 50px;
     border-radius: 20%
   }
+  .clearfix::after {
+    content: '';
+    display: block;
+    clear: both;
+    width: 0;
+    height: 0;
+  }
 </style>
